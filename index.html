@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="UVGS">
+  <meta name="keywords" content="Gaussian Splatting, Object Synthesis, 3DGS, UV Mapping">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UVGS</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <link rel="shortcut icon" href="./assets/block.png">
+
+
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">UVGS: Reimagining Unstructured 3D Gaussian Splatting <br> using UV Mapping</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+
+              <a href="https://aashishrai3799.github.io">Aashish Rai</a><sup>1,2</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="https://wdilin.github.io">Dilin Wang</a><sup>2</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="https://scholar.google.co.in/citations?hl=en&user=A7MCx_kAAAAJ&view_op=list_works">Mihir Jain</a><sup>2</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="https://nsarafianos.github.io">Nikolaos Sarafianos</a><sup>2</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <br>
+              <a href="https://arthurchen0518.github.io">Arthur Chen</a><sup>1,2</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="https://cs.brown.edu/people/ssrinath">Srinath Sridhar</a><sup>1</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="https://aayushp.github.io/">Aayush Prakash</a><sup>2</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <p style="margin:10px;"></p>
+
+              <sup>1</sup>Brown University&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<sup>2</sup>Meta Reality Labs
+              <p style="margin:10px;"></p>
+              <h2><strong>arXiv 2024</strong></h2>
+          </div>
+
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="./assets/UVGS.pdf"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>PDF</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                <a href="./assets/available_soon.html"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a href="https://youtu.be/Z-VcmzXbfzg"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+
+              <!-- Code Link. -->
+              <!-- <span class="link-block">
+                <a href="./assets/available_soon.html"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span> -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section">
+  <div class="container">
+          <div class="content has-text-centered">
+            <video style="border: 2px solid #bbb; border-radius: 10px; width: 75%;" autoplay muted loop>
+              <source src="./assets/videos/uvgs_unconditional.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+  </div>
+</section>
+
+
+
+
+
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-two-thirds">
+        <h2 class="title is-2">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+
+            3D Gaussian Splatting (3DGS) has demonstrated superior quality in modeling 3D objects and scenes. However, generating 3DGS remains challenging due to their discrete, unstructured,
+            and permutation-invariant nature. In this work, we present a simple yet effective method to overcome these challenges. We utilize spherical mapping to transform 3DGS into a
+            structured 2D representation, termed UVGS. UVGS can be viewed as multi-channel images, with feature dimensions as a concatenation of Gaussian attributes such as position,
+            scale, color, opacity, and rotation. We further find that these heterogeneous features can be compressed into a lower-dimensional (e.g., 3-channel) shared feature space using
+            a carefully designed multi-branch network. The compressed UVGS can be treated as typical RGB images. Remarkably, we discover that typical VAEs trained with latent diffusion
+            models can directly generalize to this new representation without additional training. <br>
+
+            Our novel representation makes it effortless to leverage foundational 2D models, such as diffusion models, to directly model 3DGS.
+            Additionally, one can simply increase the 2D UV resolution to accommodate more Gaussians, making UVGS a scalable solution compared to typical 3D backbones.
+            This approach immediately unlocks various novel generation applications of 3DGS by inherently utilizing the already developed superior 2D generation capabilities.
+            In our experiments, we demonstrate various unconditional, conditional generation, and inpainting applications of 3DGS based on diffusion models, which were previously non-trivial.
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <br><br>
+
+
+
+<section class="hero teaser">
+  <div class="hero-body">
+    <div class="columns is-centered">
+      <div class="column is-8">
+      <center> <img style="width: 100%;" src="./assets/images/teaser.jpg"> </center>
+        <p align="justify">
+          We propose UVGS - an structured image-like representation for 3DGS obtained by spherical mapping of 3DGS primitives.
+          The obtained UVGS maps can be further squeezed to a 3-channel “3D-aware” Super UVGS image capable of bridging the gap between
+          3DGS and existing image foundation models. We show Super UVGS can be used to compress the 3DGS assets using pretrained image
+          Autoencoders, and to directly generate unconditional and conditional 3DGS objects using diffusion models.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+<br><br>
+
+
+
+<section class="section">
+  <div class="container">
+      <h2 class="title is-4">3DGS Compression using UVGS</h2>
+        <div class="content has-text-justified">
+          <p>
+            UVGS and Super UVGS can be used to compress 3DGS assets using pretrained image Autoencoders by upto 99.5%.
+          </p>
+        </div>
+        <div class="is-vcentered interpolation-panel">
+            <!-- <center> <img style="width: 80%;" src="./assets/images/supp_illum.png"> </center> -->
+
+            <div class="is-vcentered interpolation-panel">
+          <div class="content has-text-centered">
+            <video style="border: 2px solid #bbb; border-radius: 10px; width: 75%;" autoplay muted loop>
+              <source src="./assets/videos/uvgs_ae.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="content has-text-centered">
+
+          <div class="content has-text-centered">
+          </div>
+        </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+<section class="section">
+  <div class="container">
+
+      <h2 class="title is-4">Unconditional Generation</h2>
+        <div class="content has-text-justified">
+          <p>
+            The following figure shows a wide variety of high-quality unconditional generation result from our method. We
+          train a diffusion model to sample Super UVGS images from random noise. The Super UVGS can be converted to 3DGS object using
+          inverse mapping network and inverse spherical projection.
+          </p>
+        </div>
+        <div class="is-vcentered interpolation-panel">
+            <!-- <center> <img style="width: 80%;" src="./assets/images/supp_illum.png"> </center> -->
+
+            <div class="is-vcentered interpolation-panel">
+          <div class="content has-text-centered">
+            <center> <img style="width: 80%;" src="./assets/images/unconditional.jpg"> </center>
+          </div>
+          <div class="content has-text-centered">
+
+          <div class="content has-text-centered">
+          </div>
+        </div>
+
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-steve">
+          <video poster="" id="steve" autoplay controls muted loop height="100%">
+            <source src="./assets/videos/u00.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop height="100%">
+            <source src="./assets/videos/u01.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay controls muted loop height="100%">
+            <source src="./assets/videos/u02.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay controls muted loop height="100%">
+            <source src="./assets/videos/u03.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay controls muted loop height="100%">
+            <source src="./assets/videos/u04.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay controls muted loop height="100%">
+            <source src="./assets/videos/u05.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay controls muted loop height="100%">
+            <source src="./assets/videos/u06.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay controls muted loop height="100%">
+            <source src="./assets/videos/u07.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay controls muted loop height="100%">
+            <source src="./assets/videos/u08.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay controls muted loop height="100%">
+            <source src="./assets/videos/u09.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay controls muted loop height="100%">
+            <source src="./assets/videos/u10.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<br><br>
+
+
+<section class="section">
+  <div class="container">
+
+      <h2 class="title is-4">Conditional Generation</h2>
+        <div class="content has-text-justified">
+          <p>
+            Following are the conditional generation result from our method. We
+          train a text-conditioned diffusion model to sample Super UVGS images. The Super UVGS can be converted to 3DGS object using
+          inverse mapping network and inverse spherical projection.
+          </p>
+        </div>
+        <div class="is-vcentered interpolation-panel">
+            <!-- <center> <img style="width: 80%;" src="./assets/images/supp_illum.png"> </center> -->
+
+            <div class="is-vcentered interpolation-panel">
+          <div class="content has-text-centered">
+            <video style="border: 2px solid #bbb; border-radius: 10px; width: 85%;" autoplay muted loop>
+              <source src="./assets/videos/uvgs_cond.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="content has-text-centered">
+
+          <div class="content has-text-centered">
+          </div>
+        </div>
+
+  </div>
+</section>
+
+
+
+
+
+
+
+<section class="section">
+    <div class="container">
+
+
+        <!-- Interpolating. -->
+        <h2 class="title is-4">Comparison with Baselines</h2>
+        <div class="content has-text-justified">
+
+        <div class="is-vcentered interpolation-panel">
+          <div class="content has-text-centered">
+            <center> <img style="width: 60%;" src="./assets/images/supp_compare.jpg"> </center>
+          </div>
+          <p>
+            Comparison of unconditional 3D asset generation on the cars category with SOTA methods. Figure shows that DiffTF
+            produces low-quality, low-resolution cars lacking detail. While Get3D and GaussianCube achieve higher resolution, they suffer
+            from 3D inconsistency, numerous artifacts, and lack richness in 3D detail. In contrast, our method generates high-quality, high-resolution
+            objects that are 3D consistent with sharp, well-defined edges.
+          </p>
+          </div>
+
+          <br>
+
+          <div class="is-vcentered interpolation-panel">
+            <div class="content has-text-centered">
+              <center> <img style="width: 60%;" src="./assets/images/supp_conditional.jpg"> </center>
+            </div>
+            <p>
+              We also compare the performance of our model against various SOTA methods for text-conditional object synthesis. Our
+              method not only generated high-quality 3D assets for simpler objects, but also for complicated objects with intricate geometry.
+            </p>
+            </div>
+        </div>
+        <br/>
+    </div>
+</section>
+
+
+
+
+
+<section class="section" id="bibtex">
+  <div class="container content">
+    <h2 class="titile">BibTex</h2>
+    <pre><code>
+
+      @article{rai2024uvgs,
+        title={UVGS: Reimagining Unstructured 3D Gaussian Splatting using UV Mapping},
+        author={Aashish Rai and Dilin Wang and Mihir Jain and Nikolaos Sarafianos and Arthur Chen and Srinath Sridhar and Aayush Prakash},
+        journal={arXiv preprint},
+        year={2024}
+    }
+    
+
+
+</code></pre>
+  </div>
+</section>
+
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <!-- <a href="https://arxiv.org/pdf/2208.14263.pdf" class="large-font bottom_buttons">
+        <i class="fas fa-file-pdf"></i>
+      </a> -->
+      <a href="https://github.com/aashishrai3799/3DFaceCAM/" class="large-font bottom_buttons">
+        <i class="fab fa-github"></i>
+      </a>
+      <br />
+      <p>Page template borrowed from <a href="https://nerfies.github.io/"><span class="dnerf">Nerfies</span></a>.</p>
+      <p>Copyright © 2024 Meta Reality Labs</p>
+<!--      <p><a href="https://opensource.facebook.com/legal/terms">Terms of Use</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://opensource.facebook.com/legal/privacy">Privacy Policy</a></p> -->
+    </div>
+  </div>
+</footer>
+
+  <center>
+  <a href="https://clustrmaps.com/site/1bue3"  title="Visit tracker"><img src="//www.clustrmaps.com/map_v2.png?d=BJk6zAo8z95QEZRXtzEN5tjS6XXE_gq9CAe3yMNQhKE&cl=ffffff" /></a>
+</center>
+
+</body>
+</html>
