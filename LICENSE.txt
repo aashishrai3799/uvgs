@@ -1,0 +1,33 @@
+Creative Commons Attribution-NonCommercial 4.0 International Public License (CC BY-NC 4.0)
+
+Copyright © 2025 Aashish Rai
+
+This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License. 
+To view a copy of this license, visit:
+
+https://creativecommons.org/licenses/by-nc/4.0/
+
+You are free to:
+
+- Share — copy and redistribute the material in any medium or format
+- Adapt — remix, transform, and build upon the material
+
+Under the following terms:
+
+- Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. 
+  You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+
+- NonCommercial — You may not use the material for commercial purposes.
+
+No additional restrictions — You may not apply legal terms or technological measures that legally restrict others 
+from doing anything the license permits.
+
+Disclaimer:
+
+This code is provided "as-is" and without warranty of any kind, express or implied. 
+The authors are not liable for any damages arising from its use.
+
+For more information about this project:
+
+Paper: https://arxiv.org/abs/2502.01846  
+Website: https://aashishrai3799.github.io/uvgs
